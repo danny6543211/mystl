@@ -62,13 +62,55 @@ struct __list_iterator {
 
 };
 
+/*
+   双向循环链表实现list
+*/
+
 template<class T>
 class list {
+public:
+    typedef T                   value_type;
+    typedef T*                  pointer;
+    typedef T&                  reference;
+    typedef __list_iterator<T>  iterator;
+    typedef __list_node<T>      list_node;
+    
+// 其他容器可以基于list实现，所以使用protected
+protected:
+    list_node* head;
 
+public:
+    list() {}
+    list(const std::initializer_list<T>& x) {}
+    list(const list<T>& x) {}
+    list(const iterator begin, const iterator end) {}
+    list(const size_t n, const T& x) {}
+
+    iterator begin() {}
+    iterator end() {}
+    iterator rbegin() {}
+    iterator rend() {}
+
+    size_t size() {}
+    bool empty() {}
+
+    reference front() {}
+    reference back() {}
+
+    void push_back() {}
+    void pop_back() {}
+
+    void push_front() {}
+    void pop_front() {}
+
+    iterator insert() {}
+    clear() {}
+    erase() {}
+    remove() {}
 };
 
 void test() {
-    __list_iterator<int> a = new __list_node<int>();
+    
 
 }
 
