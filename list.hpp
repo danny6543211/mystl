@@ -22,7 +22,6 @@ struct __list_node {
 template<class T>
 struct __list_iterator : public mystl::iterator<mystl::bidirectional_iterator_tag, T> {
     typedef __list_iterator<T> iterator;
-    // 双向访问迭代器
     typedef T                                   value_type;
     typedef T*                                  pointer;
     typedef T&                                  reference;
