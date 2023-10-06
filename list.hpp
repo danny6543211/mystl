@@ -106,7 +106,7 @@ public:
     iterator insert() {}
     clear() {}
     erase() {}
-    remove() {}
+    remove() {} 
 };
 
 void test() {
