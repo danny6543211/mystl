@@ -82,15 +82,6 @@ protected:
     list_node* head;
 
 public:
-    static void test() {
-        list<int> a(4, 1);
-        for (auto i = a.begin(); i != a.end(); i++) {
-            std::cout << *i;
-        }
-    
-    }
-
-
     list() {
         // 头结点不存数据
         head = new list_node;
@@ -145,17 +136,63 @@ public:
     reference front() const { return head->next->data; }
     reference back() const { return head->prev->data; }
 
-    void push_back() {}
-    void pop_back() {}
+    void push_back(const T& x) {
+        list_node* new_node = new list_node(x, head->prev, head);
+        head->prev->next = new_node;
+        head->prev = new_node;        
+    }
 
-    void push_front() {}
-    void pop_front() {}
+    void pop_back() {
+        list_node* temp = head->prev;
+        head->prev = head->prev->prev;
+        head->prev->next = head;
+        delete(temp);
+    }
 
-    iterator insert() {}
-    void clear() {}
-    void erase() {}
+    void push_front(const T& x) {
+        list_node* new_node = new list_node(x, head, head->next);
+        head->next->next->prev = new_node;
+        head->next = new_node;
+    }
+    
+    void pop_front() {
+        list_node* temp = head->next;
+        head->next = head->next->next;
+        head->next->prev = head;
+        delete(temp);
+    }
+
+    iterator insert(iterator pos, const T& x) {
+        list_node* new_node = new list_node(x, pos.node->prev, pos.node);
+        pos.node->next->prev = new_node;
+        pos.node->prev->next = new_node;
+        return pos;
+    }
+
+    void clear() {
+        
+    }
+    
+    iterator erase(iterator pos) {
+        if (pos.node == head)
+            return iterator(nullptr);
+        iterator ret(pos.node->next);
+        list_node* temp = pos.node;
+        pos.node->prev->next = pos.node->next;
+        pos.node->next->prev = pos.node->prev;
+        delete(temp);
+        return ret;
+    }
+    
     void remove() {} 
 
+    static void test() {
+        list<int> a = {1,2,3,4};
+
+        for (auto i = a.begin(); i != a.end(); i++) {
+            std::cout << *i;
+        }    
+    }
 };
 
 
