@@ -169,7 +169,10 @@ public:
     }
 
     void clear() {
-        
+        for (iterator i = begin(); i != end();) {
+            // 删除节点并指向下个地址
+            i = erase(i);
+        }
     }
     
     iterator erase(iterator pos) {
@@ -183,15 +186,16 @@ public:
         return ret;
     }
     
-    void remove() {} 
-
-    static void test() {
-        list<int> a = {1,2,3,4};
-
-        for (auto i = a.begin(); i != a.end(); i++) {
-            std::cout << *i;
-        }    
-    }
+    void remove(const T& x) {
+        for (iterator i = begin(); i != end();) {
+            if (*i == x)
+                // 调用erase指向下一个地址
+                i = erase(i);
+            else
+                i++;
+        }
+    } 
+    
 };
 
 
