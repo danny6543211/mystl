@@ -4,7 +4,7 @@
 namespace mystl {
 
 #include <initializer_list>
-#include <stddef.h>
+#include <cstddef>
 #include "iterator.hpp"
 
 template<class T>
