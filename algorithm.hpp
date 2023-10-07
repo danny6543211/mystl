@@ -3,6 +3,9 @@
 
 #include "iterator.hpp"
 
+namespace mystl {
+
+
 template<class InputIterator, class T>
 InputIterator find(InputIterator first, InputIterator last, const T& value) {
     while (first != last && *first != value) ++first;
@@ -10,5 +13,6 @@ InputIterator find(InputIterator first, InputIterator last, const T& value) {
 }
 
 
+} /* end of namespace mystl */
 
 #endif
