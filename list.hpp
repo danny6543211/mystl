@@ -3,7 +3,6 @@
 
 namespace mystl {
 
-#include <iostream>
 #include <initializer_list>
 #include <stddef.h>
 #include "iterator.hpp"
