@@ -7,6 +7,8 @@ namespace mystl {
 #include <cstddef>
 #include "iterator.hpp"
 
+#define BUFFER_MAX_BYTE 8
+
 template<class T>
 struct __deque_iterator : public mystl::iterator<mystl::random_access_iterator_tag, T> {
     typedef __deque_iterator<T>              iterator;
@@ -24,13 +26,9 @@ struct __deque_iterator : public mystl::iterator<mystl::random_access_iterator_t
     // 指向 map
     map_pointer node;
 
+
     size_t buffer_size() {
-        // 整除返回512
-        if (512 % sizeof(T) == 0)
-            return 512;
-        // 不整除返回512以下的最大数量
-        else 
-            return (512 / sizeof(T)) * sizeof(T);    
+        return BUFFER_MAX_BYTE / sizeof(T);    
     }
 
     void set_node(map_pointer new_node) {
@@ -72,7 +70,23 @@ struct __deque_iterator : public mystl::iterator<mystl::random_access_iterator_t
     }
     
     iterator operator+=(int n) {
-        
+        // 以first为基准的偏移
+        int offset = n + (cur - first);
+        // 还在同个缓冲区
+        if (offset >= 0 && offset < buffer_size()) {
+            cur += n;
+        }
+        else {
+            // 节点偏移多少个节点
+            int node_offset = n > 0 ? offset / buffer_size() 
+            : (offset + 1) / buffer_size() - 1;
+            set_node(node + node_offset);
+            // cur偏移
+            cur = first + (int)(offset > 0 ? offset % buffer_size() 
+            : (-offset) % buffer_size());
+
+        }
+        return *this; 
     }
     
 };
