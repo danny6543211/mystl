@@ -121,6 +121,19 @@ struct __deque_iterator : public mystl::iterator<mystl::random_access_iterator_t
 
 template<class T>
 class deque {
+public:
+    typedef T                   value_type;
+    typedef T*                  pointer;
+    typedef T&                  reference;
+    
+    typedef __deque_iterator<T> iterator;
+
+private:
+    iterator start;
+    iterator finish;
+
+public:
+    
 
 };
 
