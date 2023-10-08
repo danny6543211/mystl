@@ -79,6 +79,8 @@ struct __deque_iterator : public mystl::iterator<mystl::random_access_iterator_t
         else {
             // 节点偏移多少个节点
             int node_offset = n > 0 ? offset / buffer_size() 
+            // 前面+1是因为 offset == -buffer_size()还在同个缓冲区，不用偏移
+            // 后面-1因为 offset < 0 至少偏移一个节点
             : (offset + 1) / buffer_size() - 1;
             set_node(node + node_offset);
             // cur偏移
@@ -88,10 +90,36 @@ struct __deque_iterator : public mystl::iterator<mystl::random_access_iterator_t
         }
         return *this; 
     }
+
+    iterator operator+(int n) {
+        iterator temp = *this;
+        return temp += n;
+    }
+
+    iterator operator-=(int n) {
+        return *this += -n;
+    }
+
+    iterator operator-(int n) {
+        iterator temp = *this;
+        return temp -= n;
+    }
+    
+    reference operator[](int n) {
+        return *((*this) + n);
+    }
+
+    bool operator==(const iterator& x) {
+        return cur == x.cur;
+    }
+
+    bool operator!=(const iterator& x) {
+        return cur != x.cur;
+    }
     
 };
 
-
+template<class T>
 class deque {
 
 };
