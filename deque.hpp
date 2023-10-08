@@ -19,7 +19,7 @@ struct __deque_iterator : public mystl::iterator<mystl::random_access_iterator_t
     T* cur;
     // 缓冲区头
     T* first;
-    // 缓冲区尾
+    // 缓冲区尾(还没使用)
     T* last;
     // 指向 map
     map_pointer node;
@@ -33,7 +33,47 @@ struct __deque_iterator : public mystl::iterator<mystl::random_access_iterator_t
             return (512 / sizeof(T)) * sizeof(T);    
     }
 
+    void set_node(map_pointer new_node) {
+        node = new_node;
+        first = *new_node;
+        last = first + buffer_size();
+    }
     
+    reference operator*() { return *cur; }
+
+    iterator operator++() {
+        ++cur;
+        if (cur == last) {
+            set_node(node + 1);
+            cur = first;
+        }
+        return *this;
+    }
+
+    iterator operator++(int) {
+        iterator ret = *this;
+        ++(*this);
+        return ret;
+    }
+
+    iterator operator--() {
+        if (cur == first) {
+            set_node(node - 1);
+            cur = last;
+        }
+        --cur;
+        return *this;
+    }
+
+    iterator operator--(int) {
+        iterator ret = *this;
+        --(*this);
+        return ret;
+    }
+    
+    iterator operator+=(int n) {
+        
+    }
     
 };
 
